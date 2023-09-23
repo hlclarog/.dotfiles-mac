@@ -28,3 +28,6 @@ alias i.='(idea $PWD &>/dev/null &)'
 alias c.='(code $PWD &>/dev/null &)'
 alias o.='open .'
 alias up='dot package update_all'
+
+# own aliases
+alias cdc='cd $HOME/Documents/Projects'
