@@ -31,3 +31,4 @@ alias up='dot package update_all'
 
 # own aliases
 alias cdc='cd $HOME/Documents/Projects'
+alias cls='clear'
