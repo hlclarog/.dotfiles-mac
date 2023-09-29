@@ -21,7 +21,7 @@ alias gpsf="git push --force"
 alias gpl="git pull --rebase --autostash"
 alias gb="git branch"
 alias gl='$DOTLY_PATH/bin/dot git pretty-log'
-    
+
 # Utils
 alias k='kill -9'
 alias i.='(idea $PWD &>/dev/null &)'
@@ -29,9 +29,12 @@ alias c.='(code $PWD &>/dev/null &)'
 alias o.='open .'
 alias up='dot package update_all'
 
-# own aliases
+# own documents code
 alias dp='cd $HOME/Documents/Projects'
-alias tas='dp && cd ta-schedule'
+alias dt2='dp && cd trip2 && ls'
+alias dtas='dp && cd ta-schedule && ls'
+alias djob='dp && cd job && ls'
+alias drh='dp && cd rh && ls'
 alias cls='clear'
 
 # own nvm
