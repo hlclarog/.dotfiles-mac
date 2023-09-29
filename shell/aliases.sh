@@ -35,6 +35,7 @@ alias dt2='dp && cd trip2 && ls'
 alias dtas='dp && cd ta-schedule && ls'
 alias djob='dp && cd job && ls'
 alias drh='dp && cd rh && ls'
+
 alias cls='clear'
 
 # own nvm
