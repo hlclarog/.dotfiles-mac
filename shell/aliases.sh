@@ -30,7 +30,8 @@ alias o.='open .'
 alias up='dot package update_all'
 
 # own aliases
-alias cdc='cd $HOME/Documents/Projects'
+alias dp='cd $HOME/Documents/Projects'
+alias tas='dp && cd ta-schedule'
 alias cls='clear'
 
 # own nvm
