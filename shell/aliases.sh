@@ -30,11 +30,12 @@ alias o.='open .'
 alias up='dot package update_all'
 
 # own documents code
-alias dp='cd $HOME/Documents/Projects'
-alias dt2='dp && cd trip2 && ls'
-alias dtas='dp && cd ta-schedule && ls'
-alias djob='dp && cd job && ls'
-alias drh='dp && cd rh && ls'
+alias cddp='cd $HOME/Documents/Projects'
+alias cdp='cd $HOME/Projects'
+alias cdt2='cdp && cd trip2 && ls'
+alias cdtas='cdp && cd ta-schedule && ls'
+alias cdjob='cdp && cd job && ls'
+alias cdrh='cdp && cd rh && ls'
 
 alias cls='clear'
 
