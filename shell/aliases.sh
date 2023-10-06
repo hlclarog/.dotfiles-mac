@@ -30,7 +30,6 @@ alias o.='open .'
 alias up='dot package update_all'
 
 # own documents code
-alias cddp='cd $HOME/Documents/Projects'
 alias cdp='cd $HOME/Projects'
 alias cdc='cdp && cd _code && la'
 alias cdt2='cdp && cd trip2 && la'
