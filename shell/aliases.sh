@@ -42,3 +42,12 @@ alias cls='clear'
 # own nvm
 alias nad='nvm alias default'
 alias nu='nvm use'
+
+
+# view aliases docfiles
+#alias vda='vim $DOTFILES_PATH/aliases.sh'
+
+function help_aliases {
+    echo 
+    alias
+}

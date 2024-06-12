@@ -37,3 +37,6 @@ export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || pr
 
 # own config
 # source "$DOTFILES_PATH/shell/zsh/tools/ssh-git.sh"
+
+export PATH="/Applications/WebStorm.app/Contents/MacOS:$PATH"
+
