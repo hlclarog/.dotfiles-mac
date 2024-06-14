@@ -46,6 +46,7 @@ alias cls='clear'
 # own nvm
 alias nad='nvm alias default'
 alias nu='nvm use'
+alias nl='nvm list'
 
 
 # view aliases docfiles
