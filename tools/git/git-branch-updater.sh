@@ -94,7 +94,7 @@ updated_branch_git_repository() {
   fi
   git merge origin/$origin_merge_local
 
-  if [ "$OMITIR_PREGUNTAS" != true ] || [ "$PUSH_ORIGIN_END" != true ]; then
+  if [ "$OMITIR_PREGUNTAS" != true ] || [ "$PUSH_ORIGIN_END" != false ]; then
     preguntar_y_evaluar "$RIGHT_ARROW ************** git push origin $local_branch **************" "Continuando con el script...\n" "Cancelación... Saliendo del script..."
   else
     echo -e "\n______________________________________________________________________________"
