@@ -22,14 +22,14 @@ preguntar_y_evaluar() {
 
   echo -e "\n______________________________________________________________________________"
   echo -e "$pregunta"
-  read -p "¿Desea continuar? (presione Enter para continuar, cualquier otra tecla para salir): " respuesta
+  read -r -p "¿Desea continuar? (Enter para continuar, otra tecla para salir): " respuesta
 
   if [ -z "$respuesta" ]; then
     echo -e "$mensaje_continuar"
-    echo -e "______________________________________________________________________________"
+    echo -e "=============================================================================="
   else
     echo -e "$mensaje_salir"
-    echo -e "______________________________________________________________________________"
+    echo -e "=============================================================================="
     exit 0
   fi
 }
@@ -44,7 +44,11 @@ updated_branch_git_repository() {
   echo -e "$HEAVY_CHECK_MARK for merge (remote): $origin_merge_local"
   echo -e "******************** $origin_merge_local $RIGHT_ARROW $local_branch ********************"
 
-  preguntar_y_evaluar "Confirmar Ramas" "Continuando con el script...\n" "Cancelación... Saliendo del script..."
+  if [ "$OMITIR_PREGUNTAS" != true ]; then
+    preguntar_y_evaluar "Confirmar Ramas" "Continuando con el script...\n" "Cancelación... Saliendo del script..."
+  else
+    echo -e "\n______________________________________________________________________________"
+  fi
 
   if git rev-parse --verify $origin_merge_local > /dev/null 2>&1; then
     git checkout $origin_merge_local
@@ -70,7 +74,6 @@ updated_branch_git_repository() {
   # Realizar las operaciones deseadas con las ramas
   if [ "$OMITIR_PREGUNTAS" != true ]; then
     preguntar_y_evaluar "$RIGHT_ARROW git checkout $local_branch" "Continuando con el script...\n" "Cancelación... Saliendo del script..."
-    # echo -e "$pregunta"
   else
     echo -e "\n______________________________________________________________________________"
   fi
@@ -78,7 +81,6 @@ updated_branch_git_repository() {
 
   if [ "$OMITIR_PREGUNTAS" != true ]; then
     preguntar_y_evaluar "$RIGHT_ARROW git pull origin $local_branch" "Continuando con el script...\n" "Cancelación... Saliendo del script..."
-    # echo -e "$pregunta"
   else
     echo -e "\n______________________________________________________________________________"
   fi
@@ -86,14 +88,16 @@ updated_branch_git_repository() {
 
   if [ "$OMITIR_PREGUNTAS" != true ]; then
     preguntar_y_evaluar "$RIGHT_ARROW git merge origin/$origin_merge_local" "Continuando con el script...\n" "Cancelación... Saliendo del script..."
-    # echo -e "$pregunta"
   else
     echo -e "\n______________________________________________________________________________"
   fi
   git merge origin/$origin_merge_local
 
-  preguntar_y_evaluar "$RIGHT_ARROW ************** git push origin $local_branch **************" "Continuando con el script...\n" "Cancelación... Saliendo del script..."
-#   echo -e "$pregunta"
+  if [ "$OMITIR_PREGUNTAS" != true ]; then
+    preguntar_y_evaluar "$RIGHT_ARROW ************** git push origin $local_branch **************" "Continuando con el script...\n" "Cancelación... Saliendo del script..."
+  else
+    echo -e "\n______________________________________________________________________________"
+  fi
   git push origin $local_branch
 
   # Fin del script
@@ -107,7 +111,7 @@ mostrar_menu() {
   echo "2) Actualización de $BETA"
   echo "3) Actualización de $MASTER"
   echo "4) Manual"
-  read -p "Ingrese el número de la opción: " opcion
+  read -r -p "Ingrese el número de la opción: " opcion
 }
 
 preguntar_omitir_preguntas() {
@@ -146,9 +150,9 @@ case $opcion in
     ;;
   4)
     preguntar_omitir_preguntas
-    read -p "$RIGHT_ARROW Branch to Upgrade (local): " A
-    read -p "$RIGHT_ARROW Branch for merge (remote): " B
-    updated_branch_git_repository $A $B
+    read -r -p "$RIGHT_ARROW Branch to Upgrade (local): " A
+    read -r -p "$RIGHT_ARROW Branch for merge (remote): " B
+    updated_branch_git_repository "$A" "$B"
     ;;
   *)
     echo "Opción no válida. Saliendo..."
