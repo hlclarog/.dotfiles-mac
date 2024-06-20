@@ -20,22 +20,22 @@ preguntar_y_evaluar() {
   local mensaje_continuar="$2"
   local mensaje_salir="$3"
 
-  echo -e "\n_____________________________________________________________________________________"
-      echo -e "$pregunta"
-      read -p "¿Desea continuar? (presione Enter para continuar, cualquier otra tecla para salir): " respuesta
+  echo -e "\n______________________________________________________________________________"
+  echo -e "$pregunta"
+  read -p "¿Desea continuar? (presione Enter para continuar, cualquier otra tecla para salir): " respuesta
 
-      if [ -z "$respuesta" ]; then
-        echo -e "$mensaje_continuar"
-        echo -e "_____________________________________________________________________________________"
-      else
-        echo -e "$mensaje_salir"
-        echo -e "_____________________________________________________________________________________"
-        exit 0
+  if [ -z "$respuesta" ]; then
+    echo -e "$mensaje_continuar"
+    echo -e "______________________________________________________________________________"
+  else
+    echo -e "$mensaje_salir"
+    echo -e "______________________________________________________________________________"
+    exit 0
   fi
 }
 
-updated-branch-git-repository() {
-  echo -e "\n########################################################################################"
+updated_branch_git_repository() {
+  echo -e "\n###############################################################################"
 
   local local_branch="$1"
   local origin_merge_local="$2"
@@ -70,35 +70,35 @@ updated-branch-git-repository() {
   # Realizar las operaciones deseadas con las ramas
   if [ "$OMITIR_PREGUNTAS" != true ]; then
     preguntar_y_evaluar "$RIGHT_ARROW git checkout $local_branch" "Continuando con el script...\n" "Cancelación... Saliendo del script..."
-    echo -e "$pregunta"
+    # echo -e "$pregunta"
   else
-    echo -e "\n_____________________________________________________________________________________"
+    echo -e "\n______________________________________________________________________________"
   fi
   git checkout $local_branch
 
   if [ "$OMITIR_PREGUNTAS" != true ]; then
     preguntar_y_evaluar "$RIGHT_ARROW git pull origin $local_branch" "Continuando con el script...\n" "Cancelación... Saliendo del script..."
-    echo -e "$pregunta"
+    # echo -e "$pregunta"
   else
-      echo -e "\n_____________________________________________________________________________________"
+    echo -e "\n______________________________________________________________________________"
   fi
   git pull origin $local_branch
 
   if [ "$OMITIR_PREGUNTAS" != true ]; then
     preguntar_y_evaluar "$RIGHT_ARROW git merge origin/$origin_merge_local" "Continuando con el script...\n" "Cancelación... Saliendo del script..."
-    echo -e "$pregunta"
+    # echo -e "$pregunta"
   else
-      echo -e "\n_____________________________________________________________________________________"
+    echo -e "\n______________________________________________________________________________"
   fi
   git merge origin/$origin_merge_local
 
   preguntar_y_evaluar "$RIGHT_ARROW ************** git push origin $local_branch **************" "Continuando con el script...\n" "Cancelación... Saliendo del script..."
-  echo -e "$pregunta"
+#   echo -e "$pregunta"
   git push origin $local_branch
 
   # Fin del script
-  echo -e "\n ${CHECK_ICON}  Operaciones completadas."
-  echo -e "\n_____________________________________________________________________________________\n"
+  echo -e "\n${CHECK_ICON}  Operaciones completadas."
+  echo -e "\n______________________________________________________________________________\n"
 }
 
 mostrar_menu() {
@@ -122,9 +122,9 @@ preguntar_omitir_preguntas() {
 }
 
 # Mostrar mensaje de inicio
-echo -e "\n########################################################################################"
+echo -e "\n###############################################################################"
 echo -e "\n${OPEN_FILE_FOLDER} Updated Remote Project"
-echo -e "======>${CHECK_ICON}  Check Branches"
+echo -e "===>${CHECK_ICON}  Check Branches"
 
 # Mostrar el menú
 mostrar_menu
@@ -133,22 +133,22 @@ mostrar_menu
 case $opcion in
   1)
     preguntar_omitir_preguntas
-    updated-branch-git-repository $DEV $BETA
-    updated-branch-git-repository $DEV $MASTER
+    updated_branch_git_repository $DEV $BETA
+    updated_branch_git_repository $DEV $MASTER
     ;;
   2)
     preguntar_omitir_preguntas
-    updated-branch-git-repository $BETA $DEV
+    updated_branch_git_repository $BETA $DEV
     ;;
   3)
     preguntar_omitir_preguntas
-    updated-branch-git-repository $MASTER $BETA
+    updated_branch_git_repository $MASTER $BETA
     ;;
   4)
     preguntar_omitir_preguntas
     read -p "$RIGHT_ARROW Branch to Upgrade (local): " A
     read -p "$RIGHT_ARROW Branch for merge (remote): " B
-    updated-branch-git-repository $A $B
+    updated_branch_git_repository $A $B
     ;;
   *)
     echo "Opción no válida. Saliendo..."
