@@ -14,6 +14,7 @@ MASTER="master"
 
 # Variable para omitir preguntas
 OMITIR_PREGUNTAS=false
+PUSH_ORIGIN_END=false
 
 preguntar_y_evaluar() {
   local pregunta="$1"
@@ -93,7 +94,7 @@ updated_branch_git_repository() {
   fi
   git merge origin/$origin_merge_local
 
-  if [ "$OMITIR_PREGUNTAS" != true ]; then
+  if [ "$OMITIR_PREGUNTAS" != true ] || [ "$PUSH_ORIGIN_END" != true ]; then
     preguntar_y_evaluar "$RIGHT_ARROW ************** git push origin $local_branch **************" "Continuando con el script...\n" "Cancelación... Saliendo del script..."
   else
     echo -e "\n______________________________________________________________________________"
@@ -112,6 +113,17 @@ mostrar_menu() {
   echo "3) Actualización de $MASTER"
   echo "4) Manual"
   read -r -p "Ingrese el número de la opción: " opcion
+}
+
+preguntar_check_push_origin() {
+  read -p "¿Check de Cambios git push origin? (s/n): " RESPUESTA_CHECK_PUSH_ORIGIN_END
+  if [[ "$RESPUESTA_CHECK_PUSH_ORIGIN_END" =~ ^[sS]$ ]]; then
+    PUSH_ORIGIN_END=true
+    echo "Check de Cambios git push origin $local_branch activado."
+  else
+    PUSH_ORIGIN_END=false
+    echo "Check de Cambios git push origin $local_branch desactivado."
+  fi
 }
 
 preguntar_omitir_preguntas() {
@@ -137,21 +149,25 @@ mostrar_menu
 case $opcion in
   1)
     preguntar_omitir_preguntas
+    preguntar_check_push_origin
     updated_branch_git_repository $DEV $BETA
     updated_branch_git_repository $DEV $MASTER
     ;;
   2)
     preguntar_omitir_preguntas
+    preguntar_check_push_origin
     updated_branch_git_repository $BETA $DEV
     ;;
   3)
     preguntar_omitir_preguntas
+    preguntar_check_push_origin
     updated_branch_git_repository $MASTER $BETA
     ;;
   4)
     preguntar_omitir_preguntas
     read -r -p "$RIGHT_ARROW Branch to Upgrade (local): " A
     read -r -p "$RIGHT_ARROW Branch for merge (remote): " B
+    preguntar_check_push_origin
     updated_branch_git_repository "$A" "$B"
     ;;
   *)
