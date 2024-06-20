@@ -26,7 +26,7 @@ alias gl='$DOTLY_PATH/bin/dot git pretty-log'
 # Utils
 alias k='kill -9'
 alias i.='(idea $PWD &>/dev/null &)'
-alias w.='(webstorm $PWD &>/dev/null &)'
+alias ws.='(webstorm $PWD &>/dev/null &)'
 alias c.='(code $PWD &>/dev/null &)'
 alias o.='open .'
 alias up='dot package update_all'
@@ -35,11 +35,9 @@ alias reload!='. ~/.zshrc && echo "Zsh reloaded" && . ~/.bashrc && echo "Bash re
 # own documents code
 alias cdp='cd $HOME/Projects'
 alias cdw='cd $HOME/Projects/work'
-alias cdc='cdp && cd _code && la'
 alias cdt2='cdw && cd trip2-cms'
-alias cdtas='cdp && cd ta-schedule && la'
-alias cdjob='cdp && cd job && la'
-alias cdrh='cdp && cd rh && la'
+alias cdsg='cdw && cd softgnet'
+alias cdrh='cdsg && cd rh'
 
 alias cls='clear'
 
