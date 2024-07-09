@@ -114,3 +114,32 @@ function save-profile {
 function load-profile {
     Copy-Item -Path 'D:\Projects\code\.dotfiles-mac\tools\power-shell\Microsoft.PowerShell_profile.ps1' -Destination $PROFILE
 }
+
+function load-script-git-front {
+    $scriptPath = 'D:\Projects\code\.dotfiles-mac\tools\git\git-branch-updater.sh'
+    $subdirectory = '\dist\git\'
+    $currentLocation = Get-Location
+    $frontendLocation = Join-Path -Path $currentLocation -ChildPath $subdirectory
+    if (-not (Test-Path -Path $frontendLocation)) {
+        New-Item -ItemType Directory -Path $frontendLocation -Force
+    }
+    Copy-Item -Path $scriptPath -Destination $frontendLocation -Force
+    Write-Output $frontendLocation
+    cd $frontendLocation; la
+    cd $currentLocation
+}
+
+# Function to copy script to backend location
+function load-script-git-back {
+    $scriptPath = 'D:\Projects\code\.dotfiles-mac\tools\git\git-branch-updater.sh'
+    $subdirectory = '\storage\logs\git\'
+    $currentLocation = Get-Location
+    $frontendLocation = Join-Path -Path $currentLocation -ChildPath $subdirectory
+    if (-not (Test-Path -Path $frontendLocation)) {
+        New-Item -ItemType Directory -Path $frontendLocation -Force
+    }
+    Copy-Item -Path $scriptPath -Destination $frontendLocation -Force
+    Write-Output $frontendLocation
+    cd $frontendLocation; la
+    cd $currentLocation
+}
