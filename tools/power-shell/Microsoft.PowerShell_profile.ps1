@@ -108,5 +108,9 @@ function help_aliases {
 }
 
 function save-profile {
-    Copy-Item -Path $PROFILE -Destination 'D:\Projects\code\.dotfiles-mac\tools\aliases\win\Microsoft.PowerShell_profile.ps1'
+    Copy-Item -Path $PROFILE -Destination 'D:\Projects\code\.dotfiles-mac\tools\power-shell\Microsoft.PowerShell_profile.ps1'
+}
+
+function load-profile {
+    Copy-Item -Path 'D:\Projects\code\.dotfiles-mac\tools\power-shell\Microsoft.PowerShell_profile.ps1' -Destination $PROFILE
 }
