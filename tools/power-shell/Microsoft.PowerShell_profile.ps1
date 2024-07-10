@@ -37,7 +37,7 @@ function gl { & "$env:DOTLY_PATH/bin/dot" git pretty-log }
 # Utils
 function c. { Start-Process code $PWD }
 function ws. { Start-Process webstorm.bat $PWD }
-function phs. { Start-Process webstorm.bat $PWD }
+function phs. { Start-Process phpstorm.bat $PWD }
 function r. { Start-Process rider.bat $PWD }
 function open { param ([string]$path = "."); Start-Process explorer.exe -ArgumentList (Resolve-Path $path) }
 function o. { open }
@@ -111,11 +111,11 @@ function save-profile {
     Copy-Item -Path $PROFILE -Destination 'D:\Projects\code\.dotfiles-mac\tools\power-shell\Microsoft.PowerShell_profile.ps1'
 }
 
-function load-profile {
+function start-profile {
     Copy-Item -Path 'D:\Projects\code\.dotfiles-mac\tools\power-shell\Microsoft.PowerShell_profile.ps1' -Destination $PROFILE
 }
 
-function load-script-git-front {
+function start-script-git-front {
     $scriptPath = 'D:\Projects\code\.dotfiles-mac\tools\git\git-branch-updater.sh'
     $subdirectory = '\dist\git\'
     $currentLocation = Get-Location
@@ -125,12 +125,12 @@ function load-script-git-front {
     }
     Copy-Item -Path $scriptPath -Destination $frontendLocation -Force
     Write-Output $frontendLocation
-    cd $frontendLocation; la
-    cd $currentLocation
+    Set-Location $frontendLocation; la
+    Set-Location $currentLocation
 }
 
 # Function to copy script to backend location
-function load-script-git-back {
+function start-script-git-back {
     $scriptPath = 'D:\Projects\code\.dotfiles-mac\tools\git\git-branch-updater.sh'
     $subdirectory = '\storage\logs\git\'
     $currentLocation = Get-Location
@@ -140,6 +140,6 @@ function load-script-git-back {
     }
     Copy-Item -Path $scriptPath -Destination $frontendLocation -Force
     Write-Output $frontendLocation
-    cd $frontendLocation; la
-    cd $currentLocation
+    Set-Location $frontendLocation; la
+    Set-Location $currentLocation
 }
