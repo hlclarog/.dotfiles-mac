@@ -51,6 +51,7 @@ function cdw { cdp; Set-Location "work" }
 function cdt2 { cdw; Set-Location "trip2-cms" }
 function cdtas { cdw; Set-Location "ta-lsf-scheduler" }
 function cdrh { cdw; Set-Location "soft-g-net/rh" }
+function cdinv { cdw; Set-Location "soft-g-net/inventario" }
 function cdjb { cdw; Set-Location "ta-jobs" }
 function cdinc { cdw; Set-Location "ta-incident" }
 function dotfiles { cdc; Set-Location .dotfiles-mac }
