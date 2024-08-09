@@ -8,9 +8,9 @@ HEAVY_CHECK_MARK=$'\xe2\x9c\x94'  # ✔
 OPEN_FILE_FOLDER=$'\xf0\x9f\x93\x82'  # 📂
 
 # Definir variables para las ramas
-DEV="devel"
+DEV="=" #devel
 BETA="beta"
-MASTER="master"
+MASTER="" #master
 
 # Variable para omitir preguntas
 OMITIR_PREGUNTAS=false
