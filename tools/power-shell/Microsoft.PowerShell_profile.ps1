@@ -1,4 +1,4 @@
-(@(& 'C:/Users/hclaro/AppData/Local/Programs/oh-my-posh/bin/oh-my-posh.exe' init pwsh --config='C:\Users\hclaro\AppData\Local\Programs\oh-my-posh\themes\pure.omp.json' --print) -join "`n") | Invoke-Expression
+(@(& 'C:/Users/hclar/AppData/Local/Programs/oh-my-posh/bin/oh-my-posh.exe' init pwsh --config='C:\Users\hclar\AppData\Local\Programs\oh-my-posh\themes\pure.omp.json' --print) -join "`n") | Invoke-Expression
 Import-Module Terminal-Icons
 Set-PSReadLineOption -PredictionViewStyle ListView
 
