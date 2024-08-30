@@ -40,4 +40,5 @@ export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || pr
 
 export PATH="/Applications/WebStorm.app/Contents/MacOS:$PATH"
 export PATH="/Applications/PhpStorm.app/Contents/MacOS:$PATH"
+export PATH="/Applications/DataGrip.app/Contents/MacOS:$PATH"
 export PATH=$PATH:~/.composer/vendor/bin
