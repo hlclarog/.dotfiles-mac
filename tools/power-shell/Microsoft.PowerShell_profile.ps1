@@ -43,6 +43,7 @@ function open { param ([string]$path = "."); Start-Process explorer.exe -Argumen
 function o. { open }
 function k { param ([int]$pid); Stop-Process -Id $pid -Force }
 function reload! { . $PROFILE; Write-Output "PowerShell profile reloaded" }
+function bh { & "C:\Program Files\Git\bin\bash.exe" -l }
 
 # own documents code
 function cdp { Set-Location "$PROJECTS" }
