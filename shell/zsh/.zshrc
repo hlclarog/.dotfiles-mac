@@ -42,3 +42,6 @@ export PATH="/Applications/WebStorm.app/Contents/MacOS:$PATH"
 export PATH="/Applications/PhpStorm.app/Contents/MacOS:$PATH"
 export PATH="/Applications/DataGrip.app/Contents/MacOS:$PATH"
 export PATH=$PATH:~/.composer/vendor/bin
+
+# Load Angular CLI autocompletion.
+source <(ng completion script)
