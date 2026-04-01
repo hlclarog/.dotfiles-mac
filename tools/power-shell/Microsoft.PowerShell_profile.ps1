@@ -1,9 +1,12 @@
-(@(& 'C:/Users/hclar/AppData/Local/Programs/oh-my-posh/bin/oh-my-posh.exe' init pwsh --config='C:\Users\hclar\AppData\Local\Programs\oh-my-posh\themes\pure.omp.json' --print) -join "`n") | Invoke-Expression
+oh-my-posh init pwsh --config "C:\Users\Hector Claro\Documents\PowerShell/pure.omp.json" | Invoke-Expression
 Import-Module Terminal-Icons
 Set-PSReadLineOption -PredictionViewStyle ListView
+if (Get-Command fnm -ErrorAction SilentlyContinue) {
+  fnm env --use-on-cd --shell powershell | Out-String | Invoke-Expression
+}
 
 # Define Var
-$PROJECTS = "D:\Projects"
+$PROJECTS = "E:\Projects"
 
 # Custom Aliases
 Set-Alias ll Get-ChildItem
@@ -110,15 +113,17 @@ function help_aliases {
 }
 
 function save-profile {
-    Copy-Item -Path $PROFILE -Destination 'D:\Projects\code\.dotfiles-mac\tools\power-shell\Microsoft.PowerShell_profile.ps1'
+    $destination = Join-Path $PROJECTS "\code\.dotfiles-mac\tools\power-shell\Microsoft.PowerShell_profile.ps1"
+    Copy-Item -Path $PROFILE -Destination $destination
 }
 
 function start-profile {
-    Copy-Item -Path 'D:\Projects\code\.dotfiles-mac\tools\power-shell\Microsoft.PowerShell_profile.ps1' -Destination $PROFILE
+    $destination = Join-Path $PROJECTS "\code\.dotfiles-mac\tools\power-shell\Microsoft.PowerShell_profile.ps1"
+    Copy-Item -Path $destination -Destination $PROFILE
 }
 
 function start-script-git-front {
-    $scriptPath = 'D:\Projects\code\.dotfiles-mac\tools\git\git-branch-updater.sh'
+    $scriptPath = Join-Path $PROJECTS "\code\.dotfiles-mac\tools\git\git-branch-updater.sh"
     $subdirectory = '\dist\git\'
     $currentLocation = Get-Location
     $frontendLocation = Join-Path -Path $currentLocation -ChildPath $subdirectory
@@ -133,7 +138,7 @@ function start-script-git-front {
 
 # Function to copy script to backend location
 function start-script-git-back {
-    $scriptPath = 'D:\Projects\code\.dotfiles-mac\tools\git\git-branch-updater.sh'
+    $scriptPath = Join-Path $PROJECTS "\code\.dotfiles-mac\tools\git\git-branch-updater.sh"
     $subdirectory = '\storage\logs\git\'
     $currentLocation = Get-Location
     $frontendLocation = Join-Path -Path $currentLocation -ChildPath $subdirectory
