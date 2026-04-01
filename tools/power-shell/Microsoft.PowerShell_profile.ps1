@@ -6,7 +6,7 @@ if (Get-Command fnm -ErrorAction SilentlyContinue) {
 }
 
 # Define Var
-$PROJECTS = "E:\Projects"
+$PROJECTS = "D:\Projects"
 
 # Custom Aliases
 Set-Alias ll Get-ChildItem
