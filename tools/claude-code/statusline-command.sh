@@ -236,161 +236,138 @@ progress_bar() {
 }
 
 # ══════════════════════════════════════════════════════════════
-# LINE 1: Project & AI config
-# 📁 DIR │  branch ±N ▶ MOD model │ STY style │ THK │ SKL │ AGT
+# 4 flat rows — no panels, uniform backgrounds per row
+# R1: 📁 DIR │  GIT ±N (+added -deleted)
+# R2: MOD 󰧑 model │ STY 󰃣 style │ THK 🧠 level │ SKL 󰯁 N │ AGT
+# R3: CTX [▓▓░░░░░░░░░░] %% (size) │ 󰧑 ↓in ↑out
+# R4: 💲cost │ 󱑂 5h [▓▓░░░░░░░░░░] %% ⟳reset │ 󰃭 7d [▓▓░░░░░░░░░░] %% ⟳reset │ ⏱ dur │ ver
 # ══════════════════════════════════════════════════════════════
 
-# --- Left panel ---
-L1=""
-L1+="${bg_left} "
-L1+="${c_folder}${bold}${ico_folder} ${dir}${reset}${bg_left}"
+bg_r1=$'\e[48;5;235m'   # row 1 — dark (odd)
+bg_r2=$'\e[48;5;237m'   # row 2 — light (even)
+bg_r3=$'\e[48;5;235m'   # row 3 — dark (odd)
+bg_r4=$'\e[48;5;237m'   # row 4 — light (even)
+sep=$'\e[38;5;242m'      # separator color for all rows
 
+# ── Row 1: Dir + Git ──
+R1="${bg_r1} "
+R1+="${c_folder}${bold}${ico_folder} ${dir}${reset}${bg_r1}"
 if [ -n "$git_branch" ]; then
-  L1+=" ${c_sep_l}│${reset}${bg_left} "
-  L1+="${c_branch}${bold}${ico_git} ${git_branch}${reset}${bg_left}"
+  R1+=" ${sep}▸${reset}${bg_r1} "
+  R1+="${c_branch}${bold}${ico_git} ${git_branch}${reset}${bg_r1}"
   if [ "$git_changes" -gt 0 ] 2>/dev/null; then
-    L1+=" ${c_changes}${ico_changes} ${git_changes}${reset}${bg_left}"
+    R1+=" ${c_changes}${ico_changes} ${git_changes}${reset}${bg_r1}"
   else
-    L1+=" ${c_clean}${ico_clean}${reset}${bg_left}"
+    R1+=" ${c_clean}${ico_clean}${reset}${bg_r1}"
   fi
-  # Git line diff (+added -deleted)
   if [ -n "$git_added" ] || [ -n "$git_deleted" ]; then
-    L1+=" ${c_sep_l}(${reset}${bg_left}"
-    [ -n "$git_added" ] && L1+="${c_lines_add}+${git_added}${reset}${bg_left}"
-    [ -n "$git_added" ] && [ -n "$git_deleted" ] && L1+=" "
-    [ -n "$git_deleted" ] && L1+="${c_lines_del}-${git_deleted}${reset}${bg_left}"
-    L1+="${c_sep_l})${reset}${bg_left}"
+    R1+=" ${sep}(${reset}${bg_r1}"
+    [ -n "$git_added" ] && R1+="${c_lines_add}+${git_added}${reset}${bg_r1}"
+    [ -n "$git_added" ] && [ -n "$git_deleted" ] && R1+=" "
+    [ -n "$git_deleted" ] && R1+="${c_lines_del}-${git_deleted}${reset}${bg_r1}"
+    R1+="${sep})${reset}${bg_r1}"
   fi
 fi
-L1+=" "
+R1+=" ${reset}"
 
-# --- Powerline arrow ---
-L1+="${arrow_bg}${arrow_fg}${ico_arrow}${reset}"
-
-# --- Right panel ---
-L1+="${bg_right} "
-
-# Model
-L1+="${c_label}${dim}MOD${reset}${bg_right} "
-L1+="${c_model}${bold}${ico_model} ${model}${reset}${bg_right}"
-
-# Style
+# ── Row 2: AI Config ──
+R2="${bg_r2} "
+R2+="${c_label}${dim}MOD${reset}${bg_r2} ${c_model}${bold}${ico_model} ${model}${reset}${bg_r2}"
 if [ -n "$style" ] && [ "$style" != "null" ]; then
-  L1+=" ${c_sep_r}│${reset}${bg_right} "
-  L1+="${c_label}${dim}STY${reset}${bg_right} "
-  L1+="${c_style}${ico_style} ${style}${reset}${bg_right}"
+  R2+=" ${sep}▸${reset}${bg_r2} ${c_label}${dim}STY${reset}${bg_r2} ${c_style}${ico_style} ${style}${reset}${bg_r2}"
 fi
-
-# Thinking — show effort level
-L1+=" ${c_sep_r}│${reset}${bg_right} "
-L1+="${c_label}${dim}THK${reset}${bg_right} "
+R2+=" ${sep}▸${reset}${bg_r2} ${c_label}${dim}THK${reset}${bg_r2} "
 if [ "$thinking" = "on" ]; then
   case "$thinking_level" in
-    low)  L1+="${c_think_off}🧠 LOW${reset}${bg_right}" ;;
-    high) L1+="${c_think_on}${bold}🧠 HIGH${reset}${bg_right}" ;;
-    max)  c_think_max=$'\e[38;5;213m'; L1+="${c_think_max}${bold}🧠 MAX${reset}${bg_right}" ;;
-    *)    L1+="${c_think_on}🧠 MED${reset}${bg_right}" ;;
+    low)  R2+="${c_think_off}🧠 LOW${reset}${bg_r2}" ;;
+    high) R2+="${c_think_on}${bold}🧠 HIGH${reset}${bg_r2}" ;;
+    max)  c_think_max=$'\e[38;5;213m'; R2+="${c_think_max}${bold}🧠 MAX${reset}${bg_r2}" ;;
+    *)    R2+="${c_think_on}🧠 MED${reset}${bg_r2}" ;;
   esac
 else
-  L1+="${c_think_off}🧠 OFF${reset}${bg_right}"
+  R2+="${c_think_off}🧠 OFF${reset}${bg_r2}"
 fi
-
-# Skills
-L1+=" ${c_sep_r}│${reset}${bg_right} "
-L1+="${c_label}${dim}SKL${reset}${bg_right} "
-L1+="${c_skills}󰯁 ${skill_count}${reset}${bg_right}"
-
-# Agent (conditional)
+R2+=" ${sep}▸${reset}${bg_r2} ${c_label}${dim}SKL${reset}${bg_r2} ${c_skills}󰯁 ${skill_count}${reset}${bg_r2}"
 if [ -n "$agent_name" ] || [ "$worktree_count" -gt 0 ]; then
-  L1+=" ${c_sep_r}│${reset}${bg_right} "
-  L1+="${c_label}${dim}AGT${reset}${bg_right} "
-  if [ -n "$agent_name" ]; then
-    L1+="${c_agent}󰚔 ${agent_name}${reset}${bg_right}"
-  fi
+  R2+=" ${sep}▸${reset}${bg_r2} ${c_label}${dim}AGT${reset}${bg_r2} "
+  [ -n "$agent_name" ] && R2+="${c_agent}󰚔 ${agent_name}${reset}${bg_r2}"
   if [ "$worktree_count" -gt 0 ]; then
-    [ -n "$agent_name" ] && L1+=" "
-    L1+="${c_agent}+${worktree_count}wt${reset}${bg_right}"
+    [ -n "$agent_name" ] && R2+=" "
+    R2+="${c_agent}+${worktree_count}wt${reset}${bg_r2}"
   fi
 fi
+R2+=" ${reset}"
 
-L1+=" ${reset}"
-
-# ══════════════════════════════════════════════════════════════
-# LINE 2: Metrics & Session
-# CTX [▓▓▓░░░] 42% (200k) │ 💲$0.12 │ ⏱ 5h:15% │ 📅 7d:8% │ 📊 3m12s │ +156 -23 │ v1.0.80
-# ══════════════════════════════════════════════════════════════
-
-L2=""
-L2+="${bg_line2} "
-
-# Context bar
-L2+="${c_label}${dim}CTX${reset}${bg_line2} "
+# ── Row 3: Context + Tokens ──
+R3="${bg_r3} "
+R3+="${c_label}${dim}CTX${reset}${bg_r3} "
 if [ -n "$used_pct" ]; then
   bar=$(progress_bar "$used_pct" 12 "$c_bar_fill" "$c_bar_warn" "$c_bar_crit")
   ctx_color=$(pick_color "$used_pct_int" "$c_ctx" "$c_ctx_warn" "$c_ctx_crit")
-  L2+="${c_sep_2}[${bar}${reset}${bg_line2}${c_sep_2}]${reset}${bg_line2} "
-  L2+="${ctx_color}${bold}$(printf "%.0f%%" "$used_pct")${reset}${bg_line2}"
-  # Show context window size
-  if [ -n "$ctx_label" ]; then
-    L2+=" ${dim}(${ctx_label})${reset}${bg_line2}"
-  fi
-  # Warn if exceeding 200k
-  if [ "$exceeds_200k" = "true" ]; then
-    L2+=" ${c_ctx_crit}${bold}⚠ >200k${reset}${bg_line2}"
-  fi
+  R3+="${sep}[${bar}${reset}${bg_r3}${sep}]${reset}${bg_r3} "
+  R3+="${ctx_color}${bold}$(printf "%.0f%%" "$used_pct")${reset}${bg_r3}"
+  [ -n "$ctx_label" ] && R3+=" ${dim}(${ctx_label})${reset}${bg_r3}"
+  [ "$exceeds_200k" = "true" ] && R3+=" ${c_ctx_crit}${bold}⚠ >200k${reset}${bg_r3}"
 else
-  L2+="${c_sep_2}[${c_bar_empty}░░░░░░░░░░░░${reset}${bg_line2}${c_sep_2}]${reset}${bg_line2} ${dim}--%${reset}${bg_line2}"
+  R3+="${sep}[${c_bar_empty}░░░░░░░░░░░░${reset}${bg_r3}${sep}]${reset}${bg_r3} ${dim}--%${reset}${bg_r3}"
 fi
-
-# Tokens in/out
 if [ -n "$input_tokens" ] && [ "$input_tokens" != "null" ]; then
   in_fmt=$(format_tokens "$input_tokens")
   out_fmt=$(format_tokens "$output_tokens")
-  L2+=" ${c_sep_2}│${reset}${bg_line2} "
-  L2+="${dim}󰧑 ↓${in_fmt} ↑${out_fmt}${reset}${bg_line2}"
+  R3+=" ${sep}▸${reset}${bg_r3} ${c_ctx}󰧑${reset}${bg_r3} ${c_lines_add}↓${in_fmt}${reset}${bg_r3} ${c_changes}↑${out_fmt}${reset}${bg_r3}"
 fi
+R3+=" ${reset}"
+
+# ── Row 4: Usage (cost + rate limits with bars + duration + version) ──
+R4="${bg_r4} "
 
 # Cost
 if [ -n "$cost_usd" ] && [ "$cost_usd" != "null" ]; then
-  L2+=" ${c_sep_2}│${reset}${bg_line2} "
-  L2+="${c_cost}💲$(printf "%.2f" "$cost_usd")${reset}${bg_line2}"
+  R4+="${c_cost}💲$(printf "%.2f" "$cost_usd")${reset}${bg_r4}"
 fi
 
-# Rate limits
+# Rate limit 5h — with progress bar
 if [ -n "$five_pct" ]; then
   five_int=$(printf "%.0f" "$five_pct" 2>/dev/null || echo "0")
   lim_color=$(pick_color "$five_int" "$c_limit" "$c_limit_warn" "$c_limit_crit")
-  L2+=" ${c_sep_2}│${reset}${bg_line2} "
-  L2+="${lim_color}󱑂 5h:$(printf "%.0f%%" "$five_pct")${reset}${bg_line2}"
+  bar_5h=$(progress_bar "$five_pct" 12 "$c_bar_fill" "$c_bar_warn" "$c_bar_crit")
+  R4+=" ${sep}▸${reset}${bg_r4} ${lim_color}󱑂 5h${reset}${bg_r4} "
+  R4+="${sep}[${bar_5h}${reset}${bg_r4}${sep}]${reset}${bg_r4} "
+  R4+="${lim_color}${bold}$(printf "%.0f%%" "$five_pct")${reset}${bg_r4}"
   five_rst=$(format_reset "$five_reset")
-  [ -n "$five_rst" ] && L2+=" ${dim}${five_rst}${reset}${bg_line2}"
+  [ -n "$five_rst" ] && R4+=" ${c_changes}${five_rst}${reset}${bg_r4}"
 fi
+
+# Rate limit 7d — with progress bar
 if [ -n "$week_pct" ]; then
   week_int=$(printf "%.0f" "$week_pct" 2>/dev/null || echo "0")
   lim_color=$(pick_color "$week_int" "$c_limit" "$c_limit_warn" "$c_limit_crit")
-  L2+=" ${lim_color}󰃭 7d:$(printf "%.0f%%" "$week_pct")${reset}${bg_line2}"
+  bar_7d=$(progress_bar "$week_pct" 12 "$c_bar_fill" "$c_bar_warn" "$c_bar_crit")
+  R4+=" ${sep}▸${reset}${bg_r4} ${lim_color}󰃭 7d${reset}${bg_r4} "
+  R4+="${sep}[${bar_7d}${reset}${bg_r4}${sep}]${reset}${bg_r4} "
+  R4+="${lim_color}${bold}$(printf "%.0f%%" "$week_pct")${reset}${bg_r4}"
   week_rst=$(format_reset "$week_reset")
-  [ -n "$week_rst" ] && L2+=" ${dim}${week_rst}${reset}${bg_line2}"
+  [ -n "$week_rst" ] && R4+=" ${c_changes}${week_rst}${reset}${bg_r4}"
 fi
 
 # Session duration
 if [ -n "$duration_ms" ] && [ "$duration_ms" != "null" ]; then
   dur=$(format_duration "$duration_ms")
-  L2+=" ${c_sep_2}│${reset}${bg_line2} "
-  L2+="${c_session}⏱ ${dur}${reset}${bg_line2}"
+  R4+=" ${sep}▸${reset}${bg_r4} ${c_session}⏱ ${dur}${reset}${bg_r4}"
 fi
 
 # Version
 if [ -n "$version" ] && [ "$version" != "null" ]; then
-  L2+=" ${c_sep_2}│${reset}${bg_line2} "
-  L2+="${dim}v${version}${reset}${bg_line2}"
+  R4+=" ${sep}▸${reset}${bg_r4} ${dim}v${version}${reset}${bg_r4}"
 fi
 
-L2+=" ${reset}"
+R4+=" ${reset}"
 
 # ══════════════════════════════════════════
-# Output both lines
+# Output 4 rows
 # ══════════════════════════════════════════
 
-printf '%s\n' "$L1"
-printf '%s\n' "$L2"
+printf '%s\n' "$R1"
+printf '%s\n' "$R2"
+printf '%s\n' "$R3"
+printf '%s\n' "$R4"

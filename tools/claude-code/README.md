@@ -1,42 +1,58 @@
-# Claude Code — Powerline Statusline
+# Claude Code — Statusline
 
-Two-line powerline-style statusline for [Claude Code](https://claude.ai/code) with Nerd Font icons, ANSI colors, and dynamic thresholds.
+Four-row statusline for [Claude Code](https://claude.ai/code) with Nerd Font icons, ANSI colors, progress bars, and dynamic thresholds. Zebra-stripe backgrounds with `▸` triangle separators.
 
 ## Preview
 
 ```
-┌ Line 1 — Project & AI Config
-│ 📁 .dotfiles-mac │  master 󰄬 (+12 -3) ▶ MOD 󰧑 Opus 4.6 │ STY 󰃣 Gentleman │ THK 🧠 MED │ SKL 󰯁 15 │ AGT 󰚔 sdd-apply
-
-└ Line 2 — Metrics & Session
-  CTX [▓▓▓▓▓░░░░░░░] 42% (1.0M) │ 󰧑 ↓425.0k ↑12.5k │ 💲0.12 │ 󱑂 5h:16% ⟳2h13m 󰃭 7d:28% ⟳3d4h │ ⏱ 5m0s │ v1.0.80
+R1  📁 .dotfiles-mac ▸  master 󰄬 (+12 -3)
+R2  MOD 󰧑 Claude Opus 4.6 (1M) ▸ STY 󰃣 Gentleman ▸ THK 🧠 MED ▸ SKL 󰯁 15
+R3  CTX [▓▓▓▓▓░░░░░░░] 42% (1.0M) ▸ 󰧑 ↓425.0k ↑12.5k
+R4  💲5.65 ▸ 󱑂 5h [▓▓▓▓▓▓▓░░░░░] 64% ⟳32m ▸ 󰃭 7d [▓▓▓░░░░░░░░░] 32% ⟳4d7h ▸ ⏱ 56m5s ▸ v2.1.90
 ```
 
 ## Features
 
-### Line 1 — Project & AI Configuration
+### Row 1 — Project & Git
 
 | Section | Icon | Description |
 |---------|------|-------------|
 | **DIR** | 📁 | Current project directory |
 | **GIT** |  | Branch name + file count + line diff `(+N -N)` |
+
+### Row 2 — AI Configuration
+
+| Section | Icon | Description |
+|---------|------|-------------|
 | **MOD** | 󰧑 | Active Claude model |
 | **STY** | 󰃣 | Output style (e.g., Gentleman) |
 | **THK** | 🧠 | Thinking effort: `LOW` / `MED` / `HIGH` / `MAX` / `OFF` |
 | **SKL** | 󰯁 | Number of skills in `~/.claude/skills/` |
 | **AGT** | 󰚔 | Active agent name + worktree count (conditional) |
 
-### Line 2 — Metrics & Session
+### Row 3 — Context Window
 
 | Section | Icon | Description |
 |---------|------|-------------|
 | **CTX** | `[▓▓░░]` | Context window progress bar + percentage + window size |
 | **Tokens** | 󰧑 | Input ↓ / Output ↑ token counts (formatted: k/M) |
+
+### Row 4 — Usage & Session
+
+| Section | Icon | Description |
+|---------|------|-------------|
 | **Cost** | 💲 | Session cost in USD |
-| **5h** | 󱑂 | 5-hour rate limit + reset countdown `⟳2h13m` |
-| **7d** | 󰃭 | 7-day rate limit + reset countdown `⟳3d4h` |
+| **5h** | 󱑂 | 5-hour rate limit progress bar + percentage + reset countdown |
+| **7d** | 󰃭 | 7-day rate limit progress bar + percentage + reset countdown |
 | **Duration** | ⏱ | Session duration (auto-formats: s/m/h) |
 | **Version** | v | Claude Code version |
+
+### Visual Design
+
+- **Zebra-stripe backgrounds**: odd rows dark (#262626), even rows light (#3a3a3a)
+- **Triangle separators**: `▸` in subtle gray between sections
+- **Progress bars**: context window and both rate limits (5h, 7d) use `[▓▓░░]` bars
+- **Reset countdown**: shown in orange after rate limit bars (e.g., `⟳32m`)
 
 ### Dynamic Colors
 
