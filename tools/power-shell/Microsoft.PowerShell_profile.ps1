@@ -1,8 +1,8 @@
-oh-my-posh init pwsh --config "C:\Users\Hector Claro\Documents\PowerShell/pure.omp.json" | Invoke-Expression
+oh-my-posh init pwsh --config "C:\Users\hclaro\OneDrive - TransportationAmerica\Documentos\PowerShell/pure.omp.json" | Invoke-Expression
 Import-Module Terminal-Icons
 Set-PSReadLineOption -PredictionViewStyle ListView
 if (Get-Command fnm -ErrorAction SilentlyContinue) {
-  fnm env --use-on-cd --shell powershell | Out-String | Invoke-Expression
+    fnm env --use-on-cd --shell powershell | Out-String | Invoke-Expression
 }
 
 # Define Var
@@ -47,6 +47,7 @@ function o. { open }
 function k { param ([int]$pid); Stop-Process -Id $pid -Force }
 function reload! { . $PROFILE; Write-Output "PowerShell profile reloaded" }
 function bh { & "C:\Program Files\Git\bin\bash.exe" -l }
+function npm { pnpm $args }
 
 # own documents code
 function cdp { Set-Location "$PROJECTS" }
@@ -60,7 +61,15 @@ function cdjb { cdw; Set-Location "ta-jobs" }
 function cdinc { cdw; Set-Location "ta-incident" }
 function dotfiles { cdc; Set-Location .dotfiles-mac }
 
+#own fnm
+function fnml { fnm list }
+function fnmu { param ([string]$version); fnm use $version }
+function fnmd { fnm use 24 }
+function fnmclaude { fnm use 24; claude }
+
+
 # own nvm
+function nvm { fnm $args }
 function nad { nvm alias default }
 function nl { nvm list }
 # Function to read .nvmrc and use the specified Node.js version
