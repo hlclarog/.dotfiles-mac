@@ -111,7 +111,8 @@ chmod +x ~/.claude/statusline-command.sh
 {
   "statusLine": {
     "type": "command",
-    "command": "bash ~/.claude/statusline-command.sh"
+    "command": "bash ~/.claude/statusline-command.sh",
+    "refreshInterval": 60
   }
 }
 ```
@@ -121,7 +122,8 @@ chmod +x ~/.claude/statusline-command.sh
 {
   "statusLine": {
     "type": "command",
-    "command": "bash -l /c/Users/YOUR_USER/.claude/statusline-command.sh"
+    "command": "bash -l /c/Users/YOUR_USER/.claude/statusline-command.sh",
+    "refreshInterval": 60
   }
 }
 ```
@@ -149,6 +151,25 @@ Adjust the bar length (default 12 blocks):
 ```bash
 bar=$(progress_bar "$used_pct" 12 ...)   # change 12 to desired length
 ```
+
+### Refresh interval
+
+Claude Code re-runs the statusline on events: a new assistant message, `/compact`
+finishing, a permission mode change, a vim mode toggle. Those go quiet while the
+session is idle, which freezes the time-based segments — both rate limit
+countdowns and the session duration. `refreshInterval` adds a fixed timer on top:
+
+```json
+"refreshInterval": 60
+```
+
+60 is a measured default rather than a preference. The script takes roughly 130ms
+in a small repository and 180ms in a large one, so a 1-second interval would burn
+about 18% of a core permanently and churn against Claude Code's 300ms debounce,
+while the finest granularity displayed here is the minute. Lower it to 10 for a
+smoother session duration at around 2% duty cycle. If you want it shorter than
+that, cache the git calls first — keyed on the `session_id` from the JSON input,
+never on `$$`, which changes every invocation and defeats the cache.
 
 ### Thresholds
 

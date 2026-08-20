@@ -75,6 +75,18 @@ echo ""
 # ── Configure settings.json ──────────────────────
 echo "Configuring settings.json..."
 
+# Re-run the statusline on a timer as well as on events. Without it the event
+# triggers - new assistant message, /compact, permission or vim mode change - go
+# quiet while the session is idle, and the time-based segments freeze: both rate
+# limit countdowns and the session duration.
+#
+# 60 seconds is measured, not guessed. This script's statusline takes roughly
+# 130ms in a small repository and 180ms in a large one, across its jq and git
+# calls, so a 1-second interval would burn about 18% of a core permanently and
+# churn against Claude Code's 300ms debounce. The finest granularity actually
+# displayed is the minute.
+REFRESH_INTERVAL=60
+
 # Detect shell and build command path
 if [[ "$OSTYPE" == "msys" || "$OSTYPE" == "mingw"* || "$OSTYPE" == "cygwin" ]]; then
   # Windows — use bash -l with /c/ path
@@ -92,7 +104,8 @@ if [ -f "$SETTINGS" ]; then
 
   # Update or add statusLine config
   tmp=$(mktemp)
-  jq --arg cmd "$sl_command" '.statusLine = {"type": "command", "command": $cmd}' "$SETTINGS" > "$tmp"
+  jq --arg cmd "$sl_command" --argjson every "$REFRESH_INTERVAL" \
+    '.statusLine = {"type": "command", "command": $cmd, "refreshInterval": $every}' "$SETTINGS" > "$tmp"
   mv "$tmp" "$SETTINGS"
   echo "  ✓ Updated statusLine in settings.json"
 else
@@ -101,7 +114,8 @@ else
 {
   "statusLine": {
     "type": "command",
-    "command": "$sl_command"
+    "command": "$sl_command",
+    "refreshInterval": $REFRESH_INTERVAL
   }
 }
 JSONEOF
