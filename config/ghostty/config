@@ -1,0 +1,26 @@
+# Ghostty configuration managed by the dotfiles.
+# Symlinked to ~/.config/ghostty/config on macOS (symlinks/conf.macos.yaml).
+#
+# Ghostty replaces Terminal.app as the macOS client for SSH sessions into the
+# Linux VMs. Terminal.app ignores OSC 52, so text selected inside herdr (which
+# captures the mouse and copies through OSC 52) never reached the Mac
+# clipboard. Ghostty honours OSC 52, which makes copying over SSH transparent.
+#
+# Reload after editing with cmd+shift+, or restart Ghostty.
+
+# --- clipboard over SSH (OSC 52) ----------------------------------------
+# Remote programs (herdr, Neovim) may write to the Mac clipboard.
+clipboard-write = allow
+# Reading the Mac clipboard from a remote program still asks first.
+clipboard-read = ask
+
+# --- SSH -----------------------------------------------------------------
+# Ghostty advertises TERM=xterm-ghostty, which the VMs have no terminfo for.
+# ssh-terminfo installs it on the remote host on first connect; ssh-env falls
+# back to xterm-256color where that is not possible.
+shell-integration-features = ssh-env,ssh-terminfo
+
+# --- keyboard ------------------------------------------------------------
+# Option sends Alt instead of composing characters, so herdr's
+# prefix+alt+j/k agent bindings work.
+macos-option-as-alt = true
