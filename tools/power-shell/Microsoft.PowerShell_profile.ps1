@@ -1,6 +1,7 @@
 oh-my-posh init pwsh --config "C:\Users\hclaro\OneDrive - TransportationAmerica\Documentos\PowerShell/pure.omp.json" | Invoke-Expression
-Import-Module Terminal-Icons
+Import-Module Terminal-Icons -Force
 Set-PSReadLineOption -PredictionViewStyle ListView
+Set-PSReadLineOption -HistoryNoDuplicates
 if (Get-Command fnm -ErrorAction SilentlyContinue) {
     fnm env --use-on-cd --shell powershell | Out-String | Invoke-Expression
 }
@@ -31,7 +32,7 @@ function gd { & "$env:DOTLY_PATH/bin/dot" git pretty-diff }
 function gs { git status -sb }
 function gf { git fetch --all -p }
 function gps { git push }
-function gpsf { git push --force }
+function gpsf { git push --force-with-lease }
 function gpl { git pull }
 function gpll { git pull --rebase --autostash }
 function gb { git branch }
@@ -47,11 +48,14 @@ function o. { open }
 function k { param ([int]$pid); Stop-Process -Id $pid -Force }
 function reload! { . $PROFILE; Write-Output "PowerShell profile reloaded" }
 function bh { & "C:\Program Files\Git\bin\bash.exe" -l }
-function npm { pnpm $args }
+#function npm { pnpm $args }
 
 # own documents code
 function cdp { Set-Location "$PROJECTS" }
 function cdc { cdp; Set-Location "code" }
+function cdn8n { cdc; Set-Location "n8n" }
+function cdtest { cdc; Set-Location "test" }
+function cdprism { cdc; Set-Location "prism" }
 function cdw { cdp; Set-Location "work" }
 function cdt2 { cdw; Set-Location "trip2-cms" }
 function cdtas { cdw; Set-Location "ta-lsf-scheduler" }
@@ -66,6 +70,13 @@ function fnml { fnm list }
 function fnmu { param ([string]$version); fnm use $version }
 function fnmd { fnm use 24 }
 function fnmclaude { fnm use 24; claude }
+
+#wsl
+function gentleman { wsl -d gentleman }
+
+#herdr remote (run from a plain tab, not inside a herdr pane)
+function vm-wsl { herdr --remote sandbox-wsl --remote-keybindings server @args }
+function vm-imac { herdr --remote sandbox-imac --remote-keybindings server @args }
 
 
 # own nvm
@@ -129,6 +140,12 @@ function save-profile {
 function start-profile {
     $destination = Join-Path $PROJECTS "\code\.dotfiles-mac\tools\power-shell\Microsoft.PowerShell_profile.ps1"
     Copy-Item -Path $destination -Destination $PROFILE
+}
+
+# Dedupe + re-categorize the PSReadLine history in place (no backup; overwrites live)
+function clean-history {
+    & (Join-Path $PROJECTS "\code\.dotfiles-mac\tools\power-shell\Clean-History.ps1") -InPlace
+    Write-Output "History cleaned. Restart the terminal to reload it."
 }
 
 function start-script-git-front {
