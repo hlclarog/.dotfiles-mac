@@ -1,0 +1,79 @@
+# Ghostty configuration managed by the dotfiles.
+# The ~/.config/ghostty directory is symlinked to config/ghostty on macOS
+# (symlinks/conf.macos.yaml).
+#
+# Look and feel follow Gentleman.Dots (GentlemanGhostty/config):
+# https://github.com/Gentleman-Programming/Gentleman.Dots
+# Its split keybindings (alt+v/d, alt+h/j/k/l, ctrl+shift+h/j/k/l) are left
+# out on purpose: herdr owns splits, and alt+j/k would swallow herdr's
+# prefix+alt+j/k agent bindings.
+#
+# Reload after editing with cmd+shift+, or restart Ghostty.
+
+# --- font ----------------------------------------------------------------
+# brew install --cask font-iosevka-term-nerd-font
+font-family = IosevkaTerm NF
+font-size = 14
+
+# --- window --------------------------------------------------------------
+background-opacity = 0.95
+background-blur-radius = 20
+window-decoration = true
+window-padding-color = extend
+window-step-resize = false
+window-padding-balance = true
+window-height = 100
+window-width = 100
+
+# --- shader --------------------------------------------------------------
+# Relative to this directory.
+custom-shader = shaders/cursor_smear_gentleman.glsl
+
+# --- clipboard over SSH (OSC 52) ----------------------------------------
+# Terminal.app ignores OSC 52, so text selected inside herdr over SSH never
+# reached the Mac clipboard. Remote programs may write to it here.
+clipboard-write = allow
+# Reading the Mac clipboard from a remote program still asks first.
+clipboard-read = ask
+
+# --- SSH -----------------------------------------------------------------
+# Ghostty advertises TERM=xterm-ghostty, which the VMs have no terminfo for.
+# ssh-terminfo installs it on the remote host on first connect; ssh-env falls
+# back to xterm-256color where that is not possible.
+shell-integration-features = ssh-env,ssh-terminfo
+
+# --- keyboard ------------------------------------------------------------
+# Only the left Option sends Alt (herdr prefix+alt+j/k); the right one still
+# composes characters such as @ or ~.
+macos-option-as-alt = left
+keybind = alt+left=unbind
+keybind = alt+right=unbind
+keybind = cmd+k=clear_screen
+# Newline without submitting in agent prompts.
+keybind = shift+enter=text:\x1b\r
+
+# --- Gentleman theme -----------------------------------------------------
+# Same base colours as the herdr vesper theme in .dotfiles-linux.
+background = 06080f
+foreground = f3f6f9
+cursor-color = e0c15a
+selection-background = 263356
+selection-foreground = f3f6f9
+
+palette = 0=#06080f
+palette = 1=#cb7c94
+palette = 2=#b7cc85
+palette = 3=#ffe066
+palette = 4=#7fb4ca
+palette = 5=#ff8dd7
+palette = 6=#7aa89f
+palette = 7=#f3f6f9
+
+palette = 8=#8a8fa3
+palette = 9=#de8fa8
+palette = 10=#d1e8a9
+palette = 11=#fff7b1
+palette = 12=#a3d4d5
+palette = 13=#ffaeea
+palette = 14=#7fb4ca
+palette = 15=#f3f6f9

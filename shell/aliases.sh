@@ -18,26 +18,41 @@ alias gs="git status -sb"
 alias gf="git fetch --all -p"
 alias gps="git push"
 alias gpsf="git push --force"
-alias gpl="git pull --rebase --autostash"
+alias gpl="git pull"
+alias gpll="git pull --rebase --autostash"
 alias gb="git branch"
 alias gl='$DOTLY_PATH/bin/dot git pretty-log'
 
 # Utils
 alias k='kill -9'
 alias i.='(idea $PWD &>/dev/null &)'
+alias ws.='(webstorm $PWD &>/dev/null &)'
+alias ps.='(phpstorm $PWD &>/dev/null &)'
+alias dg.='(datagrip $PWD &>/dev/null &)'
 alias c.='(code $PWD &>/dev/null &)'
 alias o.='open .'
 alias up='dot package update_all'
+alias reload!='. ~/.zshrc && echo "Zsh reloaded" && . ~/.bashrc && echo "Bash reloaded"'
 
 # own documents code
-alias dp='cd $HOME/Documents/Projects'
-alias dt2='dp && cd trip2 && ls'
-alias dtas='dp && cd ta-schedule && ls'
-alias djob='dp && cd job && ls'
-alias drh='dp && cd rh && ls'
+alias cdp='cd $HOME/Projects'
+alias cdw='cd $HOME/Projects/work'
+alias cdt2='cdw && cd trip2-cms'
+alias cdsg='cdw && cd softgnet'
+alias cdrh='cdsg && cd rh'
 
 alias cls='clear'
 
 # own nvm
 alias nad='nvm alias default'
 alias nu='nvm use'
+alias nl='nvm list'
+
+
+# view aliases docfiles
+#alias vda='vim $DOTFILES_PATH/aliases.sh'
+
+function help_aliases {
+    echo 
+    alias
+}
