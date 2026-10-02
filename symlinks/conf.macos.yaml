@@ -12,6 +12,7 @@
     ~/.dotly: os/mac/.dotly
     # Whole directory so the relative custom-shader path resolves.
     ~/.config/ghostty: config/ghostty
+    ~/.config/herdr/config.toml: config/herdr/config.toml
     ~/bin/bash: /opt/homebrew/bin/bash
     ~/bin/date: /opt/homebrew/bin/gdate
     ~/bin/find: /opt/homebrew/bin/gfind

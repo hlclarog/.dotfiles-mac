@@ -1,0 +1,19 @@
+# herdr configuration managed by the dotfiles.
+# Symlinked to ~/.config/herdr/config.toml on macOS (symlinks/conf.macos.yaml).
+# herdr writes UI preference changes back into this file, so expect it to
+# appear modified after tweaking things in the UI.
+#
+# The Mac runs herdr only as the local client of `herdr --remote` (aliases
+# vm-imac / vm-wsl). remote_image_paste is always read from this local config,
+# even with --remote-keybindings server.
+onboarding = false
+
+[theme]
+name = "dracula"
+auto_switch = false
+
+[keys]
+# Ghostty passes Cmd+V through when the clipboard has no text (see
+# config/ghostty/config), so Cmd+V uploads a clipboard image to the remote
+# pane. The default is ctrl+v.
+remote_image_paste = "cmd+v"
