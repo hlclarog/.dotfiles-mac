@@ -131,6 +131,12 @@ function start-profile {
     Copy-Item -Path 'D:\Projects\code\.dotfiles-mac\tools\power-shell\Microsoft.PowerShell_profile.ps1' -Destination $PROFILE
 }
 
+# Dedupe + re-categorize the PSReadLine history in place (no backup; overwrites live)
+function clean-history {
+    & 'D:\Projects\code\.dotfiles-mac\tools\power-shell\Clean-History.ps1' -InPlace
+    Write-Output "History cleaned. Restart the terminal to reload it."
+}
+
 function start-script-git-front {
     $scriptPath = 'D:\Projects\code\.dotfiles-mac\tools\git\git-branch-updater.sh'
     $subdirectory = '\dist\git\'
