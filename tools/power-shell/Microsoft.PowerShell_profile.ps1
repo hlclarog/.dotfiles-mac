@@ -69,6 +69,13 @@ function fnmu { param ([string]$version); fnm use $version }
 function fnmd { fnm use 24 }
 function fnmclaude { fnm use 24; claude }
 
+#wsl
+function gentleman { wsl -d gentleman }
+
+#herdr remote (run from a plain tab, not inside a herdr pane)
+function vm-wsl { herdr --remote sandbox-wsl --remote-keybindings server @args }
+function vm-imac { herdr --remote sandbox-imac --remote-keybindings server @args }
+
 
 # own nvm
 function nvm { fnm $args }
