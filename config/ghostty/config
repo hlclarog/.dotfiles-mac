@@ -12,7 +12,8 @@
 
 # --- font ----------------------------------------------------------------
 # brew install --cask font-iosevka-term-nerd-font
-font-family = IosevkaTerm NF
+# Family name as installed by the Homebrew Nerd Font cask (v3 naming).
+font-family = IosevkaTerm Nerd Font Mono
 font-size = 14
 
 # --- window --------------------------------------------------------------
