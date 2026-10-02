@@ -52,6 +52,10 @@ keybind = alt+right=unbind
 keybind = cmd+k=clear_screen
 # Newline without submitting in agent prompts.
 keybind = shift+enter=text:\x1b\r
+# Cmd+V pastes text as usual. When the clipboard holds no text (e.g. only a
+# screenshot), performable: lets the key through so herdr --remote can bridge
+# the image (config/herdr/config.toml: remote_image_paste = "cmd+v").
+keybind = performable:cmd+v=paste_from_clipboard
 
 # --- Gentleman theme -----------------------------------------------------
 # Same base colours as the herdr vesper theme in .dotfiles-linux.
