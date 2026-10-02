@@ -1,9 +1,8 @@
 oh-my-posh init pwsh --config "C:\Users\hclaro\OneDrive - TransportationAmerica\Documentos\PowerShell/pure.omp.json" | Invoke-Expression
-Import-Module Terminal-Icons
+Import-Module Terminal-Icons -Force
 Set-PSReadLineOption -PredictionViewStyle ListView
-if (Get-Command fnm -ErrorAction SilentlyContinue) {
-    fnm env --use-on-cd --shell powershell | Out-String | Invoke-Expression
-}
+Set-PSReadLineOption -HistoryNoDuplicates
+fnm env --use-on-cd --shell powershell | Out-String | Invoke-Expression
 
 # Define Var
 $PROJECTS = "D:\Projects"
@@ -31,7 +30,7 @@ function gd { & "$env:DOTLY_PATH/bin/dot" git pretty-diff }
 function gs { git status -sb }
 function gf { git fetch --all -p }
 function gps { git push }
-function gpsf { git push --force }
+function gpsf { git push --force-with-lease }
 function gpl { git pull }
 function gpll { git pull --rebase --autostash }
 function gb { git branch }
@@ -47,11 +46,14 @@ function o. { open }
 function k { param ([int]$pid); Stop-Process -Id $pid -Force }
 function reload! { . $PROFILE; Write-Output "PowerShell profile reloaded" }
 function bh { & "C:\Program Files\Git\bin\bash.exe" -l }
-function npm { pnpm $args }
+#function npm { pnpm $args }
 
 # own documents code
 function cdp { Set-Location "$PROJECTS" }
 function cdc { cdp; Set-Location "code" }
+function cdn8n { cdc; Set-Location "n8n" }
+function cdtest { cdc; Set-Location "test" }
+function cdprism { cdc; Set-Location "prism" }
 function cdw { cdp; Set-Location "work" }
 function cdt2 { cdw; Set-Location "trip2-cms" }
 function cdtas { cdw; Set-Location "ta-lsf-scheduler" }
@@ -122,17 +124,15 @@ function help_aliases {
 }
 
 function save-profile {
-    $destination = Join-Path $PROJECTS "\code\.dotfiles-mac\tools\power-shell\Microsoft.PowerShell_profile.ps1"
-    Copy-Item -Path $PROFILE -Destination $destination
+    Copy-Item -Path $PROFILE -Destination 'D:\Projects\code\.dotfiles-mac\tools\power-shell\Microsoft.PowerShell_profile.ps1'
 }
 
 function start-profile {
-    $destination = Join-Path $PROJECTS "\code\.dotfiles-mac\tools\power-shell\Microsoft.PowerShell_profile.ps1"
-    Copy-Item -Path $destination -Destination $PROFILE
+    Copy-Item -Path 'D:\Projects\code\.dotfiles-mac\tools\power-shell\Microsoft.PowerShell_profile.ps1' -Destination $PROFILE
 }
 
 function start-script-git-front {
-    $scriptPath = Join-Path $PROJECTS "\code\.dotfiles-mac\tools\git\git-branch-updater.sh"
+    $scriptPath = 'D:\Projects\code\.dotfiles-mac\tools\git\git-branch-updater.sh'
     $subdirectory = '\dist\git\'
     $currentLocation = Get-Location
     $frontendLocation = Join-Path -Path $currentLocation -ChildPath $subdirectory
@@ -147,7 +147,7 @@ function start-script-git-front {
 
 # Function to copy script to backend location
 function start-script-git-back {
-    $scriptPath = Join-Path $PROJECTS "\code\.dotfiles-mac\tools\git\git-branch-updater.sh"
+    $scriptPath = 'D:\Projects\code\.dotfiles-mac\tools\git\git-branch-updater.sh'
     $subdirectory = '\storage\logs\git\'
     $currentLocation = Get-Location
     $frontendLocation = Join-Path -Path $currentLocation -ChildPath $subdirectory
