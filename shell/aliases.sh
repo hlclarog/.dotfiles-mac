@@ -43,6 +43,13 @@ alias cdrh='cdsg && cd rh'
 
 alias cls='clear'
 
+# herdr remote attach to the sandbox VMs (hosts in ~/.ssh/config).
+# --remote runs the herdr UI here, so Ctrl+V can paste Mac clipboard images
+# into remote panes; plain `ssh` + `herdr` only carries text.
+# --remote-keybindings server: use the VM's herdr keys (prefix ctrl+a).
+alias vm-imac='herdr --remote sandbox-imac --remote-keybindings server'
+alias vm-wsl='herdr --remote sandbox-wsl --remote-keybindings server'
+
 # own nvm
 alias nad='nvm alias default'
 alias nu='nvm use'
